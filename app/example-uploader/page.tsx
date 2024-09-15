@@ -3,7 +3,6 @@
 import { api } from "@/convex/_generated/api";
 import { UploadButton } from "@/utils/uploadthing";
 import { fetchMutation } from "convex/nextjs";
-import { useState } from "react";
 
 export default function ImageUpload() {
   return (

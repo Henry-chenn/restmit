@@ -1,23 +1,66 @@
+// // Download the helper library from https://www.twilio.com/docs/node/install
+// const twilio = require("twilio"); // Or, for ESM: import twilio from "twilio";
+
+// // Find your Account SID and Auth Token at twilio.com/console
+// // and set the environment variables. See http://twil.io/secure
+// const accountSid = process.env.TWILIO_AUTH_SID;
+// const authToken = process.env.TWILIO_AUTH_TOKEN;
+// const client = twilio(accountSid, authToken);
+
+// export default async function CreateMessage() {
+//   function sendMessage() {
+//     const message = await client.messages.create({
+//       body: "This is a scheduled message",
+//       messagingServiceSid: "MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+//       scheduleType: "fixed",
+//       sendAt: new Date(""),
+//       to: "+15558675310",
+//     });
+//   }
+
+//   return <div>hit</div>;
+// }
+
 // Download the helper library from https://www.twilio.com/docs/node/install
-const twilio = require("twilio"); // Or, for ESM: import twilio from "twilio";
+// import { useState } from "react";
+import { api } from "@/convex/_generated/api";
+import { fetchQuery } from "convex/nextjs";
+import twilio from "twilio";
 
 // Find your Account SID and Auth Token at twilio.com/console
 // and set the environment variables. See http://twil.io/secure
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = twilio(accountSid, authToken);
 
+export default function TextMessagingComponent() {
+  //   const [formData, setFormData] = useState(new FormData());
+  async function createMessage(formData: FormData) {
+    "use server";
+    const accountSid = process.env.TWILIO_AUTH_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    const client = twilio(accountSid, authToken);
+    const user = await fetchQuery(api.tools.fetchAllUsers);
+    const phoneNumbers = user.users.map((user) => {
+      return user.phoneNumber;
+    });
 
-async function createMessage() {
-  const message = await client.messages.create({
-    body: "This is a scheduled message",
-    messagingServiceSid: "MGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-    scheduleType: "fixed",
-    sendAt: new Date(""),
-    to: "+15558675310",
-  });
+    try {
+      phoneNumbers.forEach(function (number) {
+        var message = client.messages
+          .create({
+            body: formData.get("message")! as string,
+            from: "whatsapp:+14155238886",
+            to: "whatsapp:" + number,
+          })
+          .then((message) => console.log(message.status));
+      });
+    } catch (error) {
+      console.error("Error creating message:", error);
+    }
+  }
 
-  console.log(message.body);
+  return (
+    <form action={createMessage}>
+      <input name="message" className="text-black"></input>
+      <button type="submit">SEND MESSAGE</button>
+    </form>
+  );
 }
-
-createMessage();

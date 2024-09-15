@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import TextMessagingComponent from "../messaging";
 
-export default async function StaticTasks() {
+export default async function Leaderboard() {
   const tasks = await fetchQuery(api.tools.fetchAllUsers);
   // render `tasks`...
   return (
