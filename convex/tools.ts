@@ -33,3 +33,13 @@ export const updateImageURL = mutation({
         })
     }
   });
+
+export const fetchAllImages = query({
+    handler: async (ctx) => {
+        const images = await ctx.db
+        .query("images").collect()
+        return{
+            images: images
+        }
+    }
+})
