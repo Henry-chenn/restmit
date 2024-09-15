@@ -27,9 +27,9 @@ export const fetchAllUsers = query({
 export const updateImageURL = mutation({
     args: { imageURL: v.string() },
     handler: async (ctx, args) => {
-        ctx.db.insert("images", {
+      await ctx.db.insert("images", {
             eventName: "",
             imageURL: args.imageURL
         })
-    },
+    }
   });

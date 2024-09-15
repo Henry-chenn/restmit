@@ -35,8 +35,6 @@ export default async function StaticTasks() {
           })}
         </TableBody>
       </Table>
-
-      <TextMessagingComponent />
     </div>
   );
 }

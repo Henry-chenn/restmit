@@ -12,7 +12,7 @@ export default defineSchema(
 
         images: defineTable({
             eventName: v.string(),
-            imageURL: v.string()
+            imageURL: v.optional(v.string())
         })
     }
 )

@@ -2,21 +2,18 @@
 
 import { api } from "@/convex/_generated/api";
 import { UploadButton } from "@/utils/uploadthing";
-import { fetchMutation } from "convex/nextjs";
-import { useState } from "react";
+import { useMutation } from "convex/react";
 
 export default function ImageUpload() {
+  const saveFileToConvex = useMutation(api.tools.updateImageURL);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <UploadButton
         endpoint="imageUploader"
         onClientUploadComplete={(res) => {
-          // Do something with the response
           console.log("Files: ", res);
           alert("Upload Completed");
-          fetchMutation(api.tools.updateImageURL, {
-            imageURL: res[0].url,
-          });
+          saveFileToConvex({ imageURL: "" });
         }}
         onUploadError={(error: Error) => {
           // Do something with the error.
