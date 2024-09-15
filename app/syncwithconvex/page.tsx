@@ -14,6 +14,7 @@ export default async function SyncPage() {
   await fetchMutation(api.sync.syncFunct, {
     clerkId: user?.id!,
     name: user?.username!,
+    phoneNumber: user?.phoneNumbers[0].phoneNumber!,
   });
 
   redirect("/dashboard");
