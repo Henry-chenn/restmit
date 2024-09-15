@@ -15,7 +15,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as sync from "../sync.js";
+import type * as tools from "../tools.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -26,7 +26,7 @@ import type * as sync from "../sync.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  sync: typeof sync;
+  tools: typeof tools;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

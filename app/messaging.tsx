@@ -14,11 +14,11 @@ export default function TextMessagingComponent() {
     const accountSid = process.env.TWILIO_AUTH_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
     const client = twilio(accountSid, authToken);
-    const user = await fetchQuery(api.sync.fetchAllUsers);
-    const phoneNumbers = user.users.map((user)=> {
+    const user = await fetchQuery(api.tools.fetchAllUsers);
+    const phoneNumbers = user.users.map((user) => {
       return user.phoneNumber;
     });
-  
+
     try {
       phoneNumbers.forEach(function (number) {
         var message = client.messages

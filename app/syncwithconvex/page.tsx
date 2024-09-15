@@ -11,10 +11,11 @@ import { useEffect } from "react";
 export default async function SyncPage() {
   const user = await currentUser();
 
-  await fetchMutation(api.sync.syncFunct, {
+  await fetchMutation(api.tools.syncFunct, {
     clerkId: user?.id!,
     name: user?.username!,
     phoneNumber: user?.phoneNumbers[0].phoneNumber!,
+    isAdmin: false
   });
 
   redirect("/dashboard");

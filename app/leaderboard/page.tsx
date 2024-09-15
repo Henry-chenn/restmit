@@ -12,7 +12,7 @@ import {
 import TextMessagingComponent from "../messaging";
 
 export default async function StaticTasks() {
-  const tasks = await fetchQuery(api.sync.fetchAllUsers);
+  const tasks = await fetchQuery(api.tools.fetchAllUsers);
   // render `tasks`...
   return (
     <div>
@@ -30,7 +30,6 @@ export default async function StaticTasks() {
               <TableRow>
                 {" "}
                 <TableCell key={user.clerkId}>{user.name}</TableCell>{" "}
-                <TableCell key={user.points}></TableCell>
               </TableRow>
             );
           })}
