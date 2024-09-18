@@ -34,6 +34,16 @@ export const updateImageURL = mutation({
     }
   });
 
+export const renderButton = query({
+    args: { clerkId: v.string() },
+    handler: async (ctx, args) => {
+        const users = await ctx.db
+        .query("users").order("desc").collect()
+        const user = users.find(u => u.clerkId === args.clerkId)
+        return user?.isAdmin 
+    }
+})
+
 export const fetchAllImages = query({
     handler: async (ctx) => {
         const images = await ctx.db
